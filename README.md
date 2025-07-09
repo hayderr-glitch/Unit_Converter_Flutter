@@ -11,7 +11,6 @@ A simple and intuitive unit converter application built with Flutter.
 
 ## Screenshots
 
-To display your screenshots, you can place them in a folder (e.g., `assets/images` or `screenshots`) in your project's root directory and then reference them here.
 
 | Input & Conversion |  Input & Conversion Left | Input & Conversion Right |
 |:------------------:|:-------------------:|:-----------------:|
