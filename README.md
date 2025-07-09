@@ -1,16 +1,42 @@
-# unit_converter
+# Unit Converter
 
-A new Flutter project.
+A simple and intuitive unit converter application built with Flutter.
+
+## Features
+
+- Convert between various units of length.
+- Supported units: Meters, Kilometers, Miles, Yards, Feet, and Inches.
+- Real-time conversion as you type.
+- Clean user interface with dropdowns for easy unit selection.
+
+## Screenshots
+
+To display your screenshots, you can place them in a folder (e.g., `assets/images` or `screenshots`) in your project's root directory and then reference them here.
+
+| Input & Conversion | From Unit Selection | To Unit Selection |
+|:------------------:|:-------------------:|:-----------------:|
+| <img src="screenshots/screenshot.png" alt="Screenshot" width="250"/>| <img src="screenshots/screenshot_left.png" alt="Screenshot Left" width="250"/> | <img src="screenshots/screenshot_right.png" alt="Screenshot Right" width="250"/> |
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To get a local copy up and running, follow these simple steps.
 
-A few resources to get you started if this is your first Flutter project:
+### Prerequisites
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Make sure you have the Flutter SDK installed on your machine.
+- Flutter installation guide
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Installation
+
+1.  Clone the repository:
+    ```sh
+    git clone https://github.com/your_username/unit_converter.git
+    ```
+2.  Navigate to the project directory and install dependencies:
+    ```sh
+    flutter pub get
+    ```
+3.  Run the app:
+    ```sh
+    flutter run
+    ```
