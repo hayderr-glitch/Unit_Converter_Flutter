@@ -10,11 +10,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Unit Converter',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Unit Converter'),
     );
   }
 }
@@ -29,12 +29,55 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  final List<String> _units = [
+    'Meters',
+    'Kilometers',
+    'Miles',
+    'Yards',
+    'Feet',
+    'Inches',
+  ];
+  final Map<String, double> _conversionFactors = {
+    'Meters': 1.0,
+    'Kilometers': 1000.0,
+    'Miles': 1609.34,
+    'Yards': 0.9144,
+    'Feet': 0.3048,
+    'Inches': 0.0254,
+  };
 
-  void _incrementCounter() {
+  double? _inputValue;
+  String _fromUnit = 'Meters';
+  String _toUnit = 'Feet';
+  String _outputValue = '';
+
+  void _convert() {
+    if (_inputValue == null) {
+      setState(() {
+        _outputValue = '';
+      });
+      return;
+    }
+
+    double valueInMeters = _inputValue! * _conversionFactors[_fromUnit]!;
+    double result = valueInMeters / _conversionFactors[_toUnit]!;
+
     setState(() {
-      _counter++;
+      _outputValue = result.toStringAsFixed(4);
     });
+  }
+
+  Widget _buildUnitDropdown(
+    void Function(String?) onChanged,
+    String currentValue,
+  ) {
+    return DropdownButton<String>(
+      value: currentValue,
+      items: _units.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(value: value, child: Text(value));
+      }).toList(),
+      onChanged: onChanged,
+    );
   }
 
   @override
@@ -44,22 +87,53 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            TextField(
+              onChanged: (value) {
+                setState(() {
+                  _inputValue = double.tryParse(value);
+                  _convert();
+                });
+              },
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: 'Enter value to convert',
+                border: OutlineInputBorder(),
+              ),
             ),
+            const SizedBox(height: 20.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildUnitDropdown((newUnit) {
+                  setState(() {
+                    _fromUnit = newUnit!;
+                    _convert();
+                  });
+                }, _fromUnit),
+                const Icon(Icons.swap_horiz, size: 40),
+                _buildUnitDropdown((newUnit) {
+                  setState(() {
+                    _toUnit = newUnit!;
+                    _convert();
+                  });
+                }, _toUnit),
+              ],
+            ),
+            const SizedBox(height: 40.0),
+            if (_outputValue.isNotEmpty)
+              Center(
+                child: Text(
+                  '$_outputValue $_toUnit',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+              ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
